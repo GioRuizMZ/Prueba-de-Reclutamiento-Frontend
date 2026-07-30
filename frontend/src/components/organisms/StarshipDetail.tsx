@@ -37,7 +37,7 @@ export function StarshipDetail({ starship }: Props) {
     navigate(`/naves/${starship.id}/formulario`, { state: { starship } })
 
   return (
-    <div className="rounded-lg border border-ink-700 bg-ink-800 p-6">
+    <div className="animate-fade-in rounded-lg border border-ink-700 bg-ink-800 p-6">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-bold text-white sm:text-2xl">
