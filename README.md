@@ -6,7 +6,7 @@ Aplicación web que consume la **SWAPI** ([swapi.info](https://swapi.info)) para
 
 ```
 .
-├── frontend/   -> React + Vite + TypeScript (+ Tailwind, proximamente)
+├── frontend/   -> React + Vite + TypeScript + Tailwind (Atomic Design)
 └── backend/    -> Node + Express + TypeScript + Prisma + MySQL
 ```
 
@@ -17,8 +17,11 @@ Los dos proyectos están **desacoplados**: cada uno tiene sus propias dependenci
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run dev     # servidor de desarrollo (Vite)
+npm test        # pruebas de componentes (Vitest + Testing Library)
 ```
+
+Estructura por **Atomic Design**: `components/{atoms,molecules,organisms,templates}`, `pages/`, `router/`, `config/`.
 
 ## Backend
 
