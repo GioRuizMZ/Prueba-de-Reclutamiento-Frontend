@@ -49,4 +49,10 @@ describe('StarshipsTable', () => {
     await userEvent.click(screen.getAllByText('CR90 corvette')[0])
     expect(screen.getByText('Detalle de la nave')).toBeInTheDocument()
   })
+
+  it('abre el detalle al pulsar el botón "Ver más"', async () => {
+    renderWithRouter()
+    await userEvent.click(screen.getAllByRole('button', { name: 'Ver más' })[0])
+    expect(screen.getByText('Detalle de la nave')).toBeInTheDocument()
+  })
 })

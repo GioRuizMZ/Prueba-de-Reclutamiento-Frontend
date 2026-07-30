@@ -60,7 +60,8 @@ describe('FilmStarshipsPage', () => {
     mockGet.mockResolvedValue(ships)
     renderPage()
     expect(await screen.findByText('A New Hope')).toBeInTheDocument()
-    expect(screen.getAllByText(/CR90 corvette/)[0]).toBeInTheDocument()
+    // Se espera a que la data async resuelva antes de buscar la nave.
+    expect(await screen.findAllByText(/CR90 corvette/)).not.toHaveLength(0)
   })
 
   it('muestra el enlace para volver a películas', async () => {

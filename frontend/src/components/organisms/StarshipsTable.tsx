@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import type { Starship } from '@/types/swapi'
+import { Button } from '@/components/atoms/Button'
 
 interface Props {
   starships: Starship[]
 }
 
-// Listado de naves. Al hacer clic sobre toda la fila se abre el detalle (Pantalla 3).
+// Listado de naves. Al hacer clic sobre toda la fila (o en "Ver más") se abre
+// el detalle (Pantalla 3).
 export function StarshipsTable({ starships }: Props) {
   const navigate = useNavigate()
 
@@ -20,6 +22,7 @@ export function StarshipsTable({ starships }: Props) {
             <th className="px-4 py-3 font-semibold">Nave</th>
             <th className="px-4 py-3 font-semibold">Modelo</th>
             <th className="px-4 py-3 font-semibold">Clase</th>
+            <th className="px-4 py-3 text-right font-semibold">Detalle</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +35,16 @@ export function StarshipsTable({ starships }: Props) {
               <td className="px-4 py-3 font-medium text-white">{ship.name}</td>
               <td className="px-4 py-3 text-ink-300">{ship.model}</td>
               <td className="px-4 py-3 text-ink-300">{ship.starshipClass}</td>
+              <td className="px-4 py-3 text-right">
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    goToDetail(ship)
+                  }}
+                >
+                  Ver más
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -40,16 +53,23 @@ export function StarshipsTable({ starships }: Props) {
       {/* Tarjetas en móvil */}
       <ul className="divide-y divide-ink-700 md:hidden">
         {starships.map((ship) => (
-          <li key={ship.id}>
-            <button
-              type="button"
-              onClick={() => goToDetail(ship)}
-              className="w-full bg-ink-950 p-4 text-left transition-colors hover:bg-ink-800/60"
+          <li
+            key={ship.id}
+            onClick={() => goToDetail(ship)}
+            className="cursor-pointer bg-ink-950 p-4 transition-colors hover:bg-ink-800/60"
+          >
+            <p className="text-base font-semibold text-white">{ship.name}</p>
+            <p className="mt-1 text-sm text-ink-300">{ship.model}</p>
+            <p className="mt-0.5 text-xs text-ink-400">{ship.starshipClass}</p>
+            <Button
+              className="mt-3 w-full"
+              onClick={(e) => {
+                e.stopPropagation()
+                goToDetail(ship)
+              }}
             >
-              <p className="text-base font-semibold text-white">{ship.name}</p>
-              <p className="mt-1 text-sm text-ink-300">{ship.model}</p>
-              <p className="mt-0.5 text-xs text-ink-400">{ship.starshipClass}</p>
-            </button>
+              Ver más
+            </Button>
           </li>
         ))}
       </ul>
