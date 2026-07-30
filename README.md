@@ -35,12 +35,25 @@ npm run dev
 - API de naves (CRUD): `/api/starships`
 - Documentación Swagger: `/api/docs`
 
+### Pruebas (backend)
+
+Usan Vitest + Supertest contra una base de datos separada (`swapi_test`):
+
+```bash
+# crear la BD de test y aplicar la migración una sola vez
+mysql -u root -e "CREATE DATABASE IF NOT EXISTS swapi_test"
+DATABASE_URL="mysql://root@localhost:3306/swapi_test" npm run prisma:deploy
+
+npm test        # corre las pruebas unitarias y de integración
+```
+
 ## Tecnologías
 
 - **Frontend:** React, Vite, TypeScript
 - **Backend:** Node, Express, TypeScript
 - **ORM / Base de datos:** Prisma + MySQL
 - **Validación:** Zod
+- **Pruebas:** Vitest + Supertest
 - **Documentación:** Swagger (swagger-jsdoc + swagger-ui-express)
 - **Despliegue:** Railway
 
