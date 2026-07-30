@@ -9,7 +9,7 @@ import {
   deleteSavedStarship,
 } from '@/services/savedStarships.service'
 
-// Naves guardadas en nuestra propia base de datos (lectura y borrado del CRUD).
+// Página de naves guardadas.
 export function SavedStarshipsPage() {
   const [reloadKey, setReloadKey] = useState(0)
   const [deletingId, setDeletingId] = useState<number | null>(null)

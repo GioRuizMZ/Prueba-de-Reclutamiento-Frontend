@@ -12,7 +12,7 @@ interface Props {
 // en desktop; en móvil, logo a la izquierda y botón hamburguesa a la derecha.
 export function Navbar({ onToggleSidebar, sidebarOpen }: Props) {
   return (
-    <header className="sticky top-0 z-30 border-b border-ink-700 bg-ink-950/90 backdrop-blur">
+    <header className="sticky top-0 z-30 bg-ink-950/90 backdrop-blur">
       <div className="mx-auto grid h-20 max-w-6xl grid-cols-3 items-center px-4 sm:px-6">
         {/* Izquierda: logo */}
         <div className="flex justify-start">

@@ -15,8 +15,7 @@ import {
 import type { Starship } from '@/types/swapi'
 import type { StarshipFormValues } from '@/schemas/starshipForm.schema'
 
-// Pantalla 3.1: formulario con datos de la nave, validaciones y envío al backend.
-// La primera vez crea el registro (POST); después edita el mismo (PUT).
+// Formulario para guardar o editar una nave.
 export function StarshipFormPage() {
   const { starshipId } = useParams<{ starshipId: string }>()
   const location = useLocation()

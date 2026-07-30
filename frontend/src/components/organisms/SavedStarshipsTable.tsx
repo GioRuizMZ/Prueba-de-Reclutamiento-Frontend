@@ -7,7 +7,7 @@ interface Props {
   deletingId?: number | null
 }
 
-// Listado de naves guardadas con opción de eliminar (CRUD).
+// Tabla de naves guardadas.
 export function SavedStarshipsTable({ starships, onDelete, deletingId }: Props) {
   return (
     <div className="overflow-hidden rounded-lg border border-ink-700">

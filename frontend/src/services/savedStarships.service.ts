@@ -1,7 +1,7 @@
 import { apiClient } from '@/lib/apiClient'
 import type { SavedStarship, SavedStarshipInput } from '@/types/savedStarship'
 
-// Guarda una nave en nuestra base de datos (procesa el formulario, punto 5).
+// Crea una nave.
 export async function createSavedStarship(
   payload: SavedStarshipInput,
 ): Promise<SavedStarship> {
@@ -9,7 +9,7 @@ export async function createSavedStarship(
   return data
 }
 
-// Actualiza una nave guardada existente (edita la misma en vez de crear otra).
+// Actualiza una nave.
 export async function updateSavedStarship(
   id: number,
   payload: SavedStarshipInput,
@@ -21,13 +21,13 @@ export async function updateSavedStarship(
   return data
 }
 
-// Lista las naves guardadas.
+// Lista las naves.
 export async function getSavedStarships(): Promise<SavedStarship[]> {
   const { data } = await apiClient.get<SavedStarship[]>('/api/starships')
   return data
 }
 
-// Elimina una nave guardada por id.
+// Elimina una nave.
 export async function deleteSavedStarship(id: number): Promise<void> {
   await apiClient.delete(`/api/starships/${id}`)
 }
