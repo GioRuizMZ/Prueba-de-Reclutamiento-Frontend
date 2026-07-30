@@ -15,24 +15,30 @@ const router = Router()
  *     Film:
  *       type: object
  *       properties:
+ *         id: { type: integer, example: 1 }
  *         title: { type: string, example: "A New Hope" }
- *         episode_id: { type: integer, example: 4 }
+ *         episode: { type: integer, example: 4 }
  *         director: { type: string }
  *         producer: { type: string }
- *         release_date: { type: string, example: "1977-05-25" }
- *         starships: { type: array, items: { type: string } }
- *         url: { type: string }
+ *         releaseDate: { type: string, example: "1977-05-25" }
+ *         openingCrawl: { type: string }
+ *         starshipCount: { type: integer, example: 8 }
  *     SwapiStarship:
  *       type: object
  *       properties:
+ *         id: { type: integer, example: 12 }
  *         name: { type: string, example: "X-wing" }
  *         model: { type: string }
  *         manufacturer: { type: string }
- *         max_atmosphering_speed: { type: string }
+ *         starshipClass: { type: string }
+ *         costInCredits: { type: string }
+ *         length: { type: string }
  *         crew: { type: string }
  *         passengers: { type: string }
- *         starship_class: { type: string }
- *         url: { type: string }
+ *         maxAtmospheringSpeed: { type: string }
+ *         cargoCapacity: { type: string }
+ *         hyperdriveRating: { type: string }
+ *         consumables: { type: string }
  */
 
 /**

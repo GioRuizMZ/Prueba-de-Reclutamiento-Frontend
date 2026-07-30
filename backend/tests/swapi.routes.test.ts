@@ -25,39 +25,73 @@ afterEach(() => {
 })
 
 describe('GET /api/swapi/films', () => {
-  it('devuelve las películas ordenadas por episodio', async () => {
+  it('devuelve las películas ordenadas por episodio y normalizadas (DTO)', async () => {
     stubFetch({
       '/films': [
-        { episode_id: 4, title: 'A New Hope', url: 'x/4', starships: [] },
-        { episode_id: 1, title: 'The Phantom Menace', url: 'x/1', starships: [] },
+        {
+          episode_id: 4,
+          title: 'A New Hope',
+          url: 'https://swapi.info/api/films/1',
+          starships: ['a', 'b'],
+          director: 'George Lucas',
+          producer: 'Gary Kurtz',
+          release_date: '1977-05-25',
+          opening_crawl: '',
+        },
+        {
+          episode_id: 1,
+          title: 'The Phantom Menace',
+          url: 'https://swapi.info/api/films/4',
+          starships: [],
+          director: 'George Lucas',
+          producer: 'Rick McCallum',
+          release_date: '1999-05-19',
+          opening_crawl: '',
+        },
       ],
     })
 
     const res = await request(app).get('/api/swapi/films')
     expect(res.status).toBe(200)
-    expect(res.body.map((f: { episode_id: number }) => f.episode_id)).toEqual([
-      1, 4,
-    ])
+    // Ordenadas por episodio ascendente
+    expect(res.body.map((f: { episode: number }) => f.episode)).toEqual([1, 4])
+    // Forma normalizada (camelCase, con id, sin snake_case)
+    const first = res.body[0]
+    expect(first).toMatchObject({ id: 4, title: 'The Phantom Menace', episode: 1 })
+    expect(first).not.toHaveProperty('episode_id')
   })
 })
 
 describe('GET /api/swapi/starships/:id', () => {
-  it('devuelve el detalle de la nave', async () => {
-    stubFetch({ '/starships/9': { name: 'Death Star', model: 'DS-1' } })
+  it('devuelve el detalle de la nave normalizado', async () => {
+    stubFetch({
+      '/starships/9': {
+        name: 'Death Star',
+        model: 'DS-1',
+        max_atmosphering_speed: 'n/a',
+        starship_class: 'Deep Space Mobile Battlestation',
+        url: 'https://swapi.info/api/starships/9',
+      },
+    })
     const res = await request(app).get('/api/swapi/starships/9')
     expect(res.status).toBe(200)
-    expect(res.body.name).toBe('Death Star')
+    expect(res.body).toMatchObject({
+      id: 9,
+      name: 'Death Star',
+      starshipClass: 'Deep Space Mobile Battlestation',
+    })
+    expect(res.body).not.toHaveProperty('starship_class')
   })
 
   it('propaga 404 cuando SWAPI no encuentra el recurso', async () => {
-    stubFetch({}) // cualquier URL -> 404
+    stubFetch({})
     const res = await request(app).get('/api/swapi/starships/99999')
     expect(res.status).toBe(404)
   })
 })
 
 describe('GET /api/swapi/films/:id/starships', () => {
-  it('resuelve y devuelve las naves de la película', async () => {
+  it('resuelve y devuelve las naves de la película normalizadas', async () => {
     stubFetch({
       '/films/1': {
         title: 'A New Hope',
@@ -68,8 +102,14 @@ describe('GET /api/swapi/films/:id/starships', () => {
         ],
         url: 'https://swapi.info/api/films/1',
       },
-      '/starships/2': { name: 'CR90 corvette', url: 'x/2' },
-      '/starships/3': { name: 'Star Destroyer', url: 'x/3' },
+      '/starships/2': {
+        name: 'CR90 corvette',
+        url: 'https://swapi.info/api/starships/2',
+      },
+      '/starships/3': {
+        name: 'Star Destroyer',
+        url: 'https://swapi.info/api/starships/3',
+      },
     })
 
     const res = await request(app).get('/api/swapi/films/1/starships')
@@ -79,5 +119,6 @@ describe('GET /api/swapi/films/:id/starships', () => {
       'CR90 corvette',
       'Star Destroyer',
     ])
+    expect(res.body.map((s: { id: number }) => s.id)).toEqual([2, 3])
   })
 })
