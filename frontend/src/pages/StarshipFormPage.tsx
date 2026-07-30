@@ -8,12 +8,14 @@ import { StarshipForm } from '@/components/organisms/StarshipForm'
 import { Button } from '@/components/atoms/Button'
 import { useAsync } from '@/hooks/useAsync'
 import { getStarship } from '@/services/starships.service'
-import { createSavedStarship } from '@/services/savedStarships.service'
+import {
+  createSavedStarship,
+  updateSavedStarship,
+} from '@/services/savedStarships.service'
 import type { Starship } from '@/types/swapi'
-import type { SavedStarship } from '@/types/savedStarship'
 import type { StarshipFormValues } from '@/schemas/starshipForm.schema'
 
-// Pantalla 3.1: formulario con datos de la nave, validaciones y envío al backend.
+// Formulario para guardar o editar una nave.
 export function StarshipFormPage() {
   const { starshipId } = useParams<{ starshipId: string }>()
   const location = useLocation()
@@ -29,16 +31,26 @@ export function StarshipFormPage() {
     [starshipId],
   )
 
+  const [recordId, setRecordId] = useState<number | null>(null)
+  const [formValues, setFormValues] = useState<StarshipFormValues | null>(null)
+  const [justSaved, setJustSaved] = useState(false)
+  const [savedName, setSavedName] = useState('')
   const [submitting, setSubmitting] = useState(false)
-  const [saved, setSaved] = useState<SavedStarship | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
   const handleSubmit = async (values: StarshipFormValues) => {
     setSubmitting(true)
     setSubmitError(null)
     try {
-      const created = await createSavedStarship(values)
-      setSaved(created)
+      if (recordId === null) {
+        const created = await createSavedStarship(values)
+        setRecordId(created.id)
+      } else {
+        await updateSavedStarship(recordId, values)
+      }
+      setFormValues(values)
+      setSavedName(values.name)
+      setJustSaved(true)
     } catch (err) {
       setSubmitError(
         err instanceof Error ? err.message : 'No se pudo guardar la nave',
@@ -47,6 +59,16 @@ export function StarshipFormPage() {
       setSubmitting(false)
     }
   }
+
+  const defaultValues: StarshipFormValues | null =
+    formValues ??
+    (starship
+      ? {
+          name: starship.name,
+          model: starship.model,
+          maxAtmospheringSpeed: starship.maxAtmospheringSpeed,
+        }
+      : null)
 
   return (
     <div>
@@ -66,7 +88,7 @@ export function StarshipFormPage() {
         />
       )}
 
-      {!loading && !error && starship && !saved && (
+      {!loading && !error && defaultValues && !justSaved && (
         <div className="mx-auto w-full max-w-md space-y-4">
           {submitError && (
             <StateMessage
@@ -76,24 +98,20 @@ export function StarshipFormPage() {
             />
           )}
           <StarshipForm
-            defaultValues={{
-              name: starship.name,
-              model: starship.model,
-              maxAtmospheringSpeed: starship.maxAtmospheringSpeed,
-            }}
+            defaultValues={defaultValues}
             onSubmit={handleSubmit}
             submitting={submitting}
           />
         </div>
       )}
 
-      {saved && (
+      {justSaved && (
         <div className="mx-auto w-full max-w-md space-y-4 text-center">
           <StateMessage
             title="¡Nave guardada!"
-            description={`Los datos de "${saved.name}" se guardaron correctamente.`}
+            description={`Los datos de "${savedName}" se guardaron correctamente.`}
           />
-          <Button variant="outline" onClick={() => setSaved(null)}>
+          <Button variant="outline" onClick={() => setJustSaved(false)}>
             Editar de nuevo
           </Button>
         </div>
