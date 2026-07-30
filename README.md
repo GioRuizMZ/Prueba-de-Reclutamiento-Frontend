@@ -63,6 +63,33 @@ npm test        # corre las pruebas unitarias y de integración
 - **Documentación:** Swagger (swagger-jsdoc + swagger-ui-express)
 - **Despliegue:** Railway
 
+## Despliegue en Railway
+
+Se crean 3 servicios en un mismo proyecto, todos desde el repo de GitHub:
+
+### 1. MySQL
+
+`New > Database > Add MySQL`. Railway genera la variable `DATABASE_URL`.
+
+### 2. Backend (root: `backend/`)
+
+- En el servicio: *Settings > Root Directory* = `backend`.
+- Variables:
+  - `DATABASE_URL` = referencia a la del servicio MySQL (`${{MySQL.DATABASE_URL}}`).
+  - `SWAPI_BASE_URL` = `https://swapi.info/api` (opcional).
+- Railway usa los scripts del `package.json`:
+  - install → `postinstall` genera el cliente Prisma.
+  - build → `tsc`.
+  - start → aplica migraciones (`prisma migrate deploy`) y arranca el servidor.
+- Genera *Public Networking* para obtener la URL pública del backend.
+
+### 3. Frontend (root: `frontend/`)
+
+- *Settings > Root Directory* = `frontend`.
+- Variable (en build):
+  - `VITE_API_URL` = URL pública del backend (paso 2).
+- start → `serve -s dist` (sirve el build estático con fallback a `index.html`).
+
 ## Ramas
 
 - `main` - base estable
