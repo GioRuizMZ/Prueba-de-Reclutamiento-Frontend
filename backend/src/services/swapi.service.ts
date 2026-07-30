@@ -1,5 +1,6 @@
 import { HttpError } from '../lib/httpError.js'
-import type { Film, Starship } from '../types/swapi.js'
+import type { Film, Starship, FilmDTO, StarshipDTO } from '../types/swapi.js'
+import { toFilmDTO, toStarshipDTO } from '../mappers/swapi.mapper.js'
 
 const SWAPI_BASE = process.env.SWAPI_BASE_URL || 'https://swapi.info/api'
 
@@ -22,27 +23,31 @@ async function fetchFromSwapi<T>(path: string): Promise<T> {
   return (await res.json()) as T
 }
 
-// Todas las películas, ordenadas por episodio (1 -> 6).
-export async function getFilms(): Promise<Film[]> {
+// Todas las películas, ordenadas por episodio (1 -> 6) y normalizadas.
+export async function getFilms(): Promise<FilmDTO[]> {
   const films = await fetchFromSwapi<Film[]>('/films')
-  return films.sort((a, b) => a.episode_id - b.episode_id)
+  return films.sort((a, b) => a.episode_id - b.episode_id).map(toFilmDTO)
 }
 
-// Una película por id.
-export async function getFilm(id: string): Promise<Film> {
-  return fetchFromSwapi<Film>(`/films/${id}`)
+// Una película por id, normalizada.
+export async function getFilm(id: string): Promise<FilmDTO> {
+  const film = await fetchFromSwapi<Film>(`/films/${id}`)
+  return toFilmDTO(film)
 }
 
-// Naves que aparecen en una película: resuelve cada URL de nave.
-export async function getFilmStarships(id: string): Promise<Starship[]> {
-  const film = await getFilm(id)
+// Naves que aparecen en una película: resuelve cada URL y las normaliza.
+export async function getFilmStarships(id: string): Promise<StarshipDTO[]> {
+  const film = await fetchFromSwapi<Film>(`/films/${id}`)
   const starships = await Promise.all(
-    film.starships.map((url) => fetchFromSwapi<Starship>(url.replace(SWAPI_BASE, ''))),
+    film.starships.map((url) =>
+      fetchFromSwapi<Starship>(url.replace(SWAPI_BASE, '')),
+    ),
   )
-  return starships
+  return starships.map(toStarshipDTO)
 }
 
-// Una nave por id.
-export async function getStarship(id: string): Promise<Starship> {
-  return fetchFromSwapi<Starship>(`/starships/${id}`)
+// Una nave por id, normalizada.
+export async function getStarship(id: string): Promise<StarshipDTO> {
+  const starship = await fetchFromSwapi<Starship>(`/starships/${id}`)
+  return toStarshipDTO(starship)
 }

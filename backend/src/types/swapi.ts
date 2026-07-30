@@ -27,3 +27,32 @@ export interface Starship {
   starship_class: string
   url: string
 }
+
+// --- DTOs normalizados que expone nuestra API (camelCase, con id, sin campos de más) ---
+
+export interface FilmDTO {
+  id: number
+  title: string
+  episode: number
+  director: string
+  producer: string
+  releaseDate: string
+  openingCrawl: string
+  starshipCount: number
+}
+
+export interface StarshipDTO {
+  id: number
+  name: string
+  model: string
+  manufacturer: string
+  starshipClass: string
+  costInCredits: string
+  length: string
+  crew: string
+  passengers: string
+  maxAtmospheringSpeed: string
+  cargoCapacity: string
+  hyperdriveRating: string
+  consumables: string
+}
