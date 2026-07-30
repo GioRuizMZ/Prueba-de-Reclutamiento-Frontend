@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "start": "serve -s dist",
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
@@ -18,6 +19,7 @@
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.83.0",
     "react-router-dom": "^7.18.2",
+    "serve": "^14.2.6",
     "zod": "^4.4.3"
   },
   "devDependencies": {
