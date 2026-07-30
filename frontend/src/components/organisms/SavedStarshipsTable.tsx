@@ -10,7 +10,7 @@ interface Props {
 // Tabla de naves guardadas.
 export function SavedStarshipsTable({ starships, onDelete, deletingId }: Props) {
   return (
-    <div className="overflow-hidden rounded-lg border border-ink-700">
+    <div className="animate-fade-in overflow-hidden rounded-lg border border-ink-700">
       {/* Tabla en desktop */}
       <table className="hidden w-full text-left text-sm md:table">
         <thead className="bg-ink-800 text-ink-300">

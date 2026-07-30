@@ -28,7 +28,7 @@ export function StarshipForm({ defaultValues, onSubmit, submitting }: Props) {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="mx-auto w-full max-w-md space-y-4 rounded-lg border border-ink-700 bg-ink-800 p-6"
+      className="animate-fade-in mx-auto w-full max-w-md space-y-4 rounded-lg border border-ink-700 bg-ink-800 p-6"
     >
       <TextField
         label="Nombre"

@@ -15,8 +15,10 @@ export function MainLayout() {
       />
       <MobileSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
-        <Outlet />
+      <main className="flex-1 bg-ink-900">
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+          <Outlet />
+        </div>
       </main>
 
       <footer className="border-t border-ink-700 py-4 text-center text-xs text-ink-400/60">
