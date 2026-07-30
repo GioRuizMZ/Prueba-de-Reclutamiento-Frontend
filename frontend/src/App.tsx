@@ -1,9 +1,7 @@
+import { AppRouter } from '@/router/AppRouter'
+
 function App() {
-  return (
-    <div>
-      <h1>SWAPI · Prueba Improntad</h1>
-    </div>
-  )
+  return <AppRouter />
 }
 
 export default App

@@ -1,14 +1,40 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+@import 'tailwindcss';
+
+/*
+  Paleta del proyecto - monocromática (negro / blanco / gris tarjeta).
+  Tokens de Tailwind v4 disponibles como utilidades:
+  bg-ink-950, bg-ink-800, text-white, border-ink-700, text-ink-400, etc.
+*/
+@theme {
+  /* Escala de grises / negro */
+  --color-ink-950: #000000; /* fondo de página y navbar */
+  --color-ink-900: #0a0a0b;
+  --color-ink-800: #1d1e1f; /* tarjetas y superficies */
+  --color-ink-700: #2a2b2c; /* bordes */
+  --color-ink-600: #3a3b3c; /* bordes con más contraste */
+  --color-ink-500: #6b6c6d;
+  --color-ink-400: #9a9b9c; /* texto secundario / muted */
+  --color-ink-300: #c9cacb;
+  --color-ink-100: #e9eaea;
+
+  /* Tipografías */
+  --font-sans: 'DINNext', 'Matterhorn', 'Helvetica', sans-serif;
+  --font-display: 'DINNext', 'Matterhorn', 'Helvetica', sans-serif;
 }
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
 }
 
 body {
-  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-ink-950);
+  color: #ffffff;
 }
