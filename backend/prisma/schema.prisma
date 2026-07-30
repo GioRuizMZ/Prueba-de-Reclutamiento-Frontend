@@ -1,0 +1,29 @@
+// Prisma schema - Prueba Improntad
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// Nave de Star Wars guardada desde el formulario (Pantalla 3.1).
+model Starship {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  model                String
+  maxAtmospheringSpeed String   @map("max_atmosphering_speed")
+  manufacturer         String?
+  starshipClass        String?  @map("starship_class")
+  crew                 String?
+  passengers           String?
+  costInCredits        String?  @map("cost_in_credits")
+  swapiUrl             String?  @map("swapi_url")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@map("starships")
+}
