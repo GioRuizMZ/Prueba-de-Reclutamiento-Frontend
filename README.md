@@ -35,8 +35,11 @@ npm run dev
 
 - Servidor: `http://localhost:3000`
 - Healthcheck: `GET /health`
-- API de naves (CRUD): `/api/starships`
+- API de naves (CRUD propio): `/api/starships`
+- Proxy a SWAPI: `/api/swapi/films`, `/api/swapi/films/:id/starships`, `/api/swapi/starships/:id`
 - Documentación Swagger: `/api/docs`
+
+El frontend consume SWAPI **a través del backend** (patrón BFF): el backend orquesta las llamadas a swapi.info y expone una sola superficie de API.
 
 ### Pruebas (backend)
 
