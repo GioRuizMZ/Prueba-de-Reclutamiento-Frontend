@@ -2,10 +2,16 @@ import { z } from 'zod'
 
 // Validación de los datos que llegan del formulario (Pantalla 3.1).
 export const createStarshipSchema = z.object({
-  name: z.string().trim().min(1, 'El nombre es obligatorio'),
-  model: z.string().trim().min(1, 'El modelo es obligatorio'),
+  name: z
+    .string({ error: 'El nombre es obligatorio' })
+    .trim()
+    .min(1, 'El nombre es obligatorio'),
+  model: z
+    .string({ error: 'El modelo es obligatorio' })
+    .trim()
+    .min(1, 'El modelo es obligatorio'),
   maxAtmospheringSpeed: z
-    .string()
+    .string({ error: 'La velocidad es obligatoria' })
     .trim()
     .min(1, 'La velocidad es obligatoria'),
   manufacturer: z.string().trim().optional(),
