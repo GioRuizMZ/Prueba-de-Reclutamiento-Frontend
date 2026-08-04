@@ -36,6 +36,24 @@
   }
 }
 
+/* Pie gris de la tabla tipo tarjeta de nave: top recto (pegado a las filas) y
+   una muesca (trapecio) recortada en el borde inferior, hacia la derecha, con
+   las esquinas inferiores achaflanadas. */
+@utility clip-notch-footer {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    76% 100%,
+    73% calc(100% - 14px),
+    65% calc(100% - 14px),
+    62% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}
+
 * {
   box-sizing: border-box;
 }

@@ -1,5 +1,6 @@
 import type { SavedStarship } from '@/types/savedStarship'
 import { Button } from '@/components/atoms/Button'
+import { NotchFooter } from '@/components/atoms/NotchFooter'
 
 interface Props {
   starships: SavedStarship[]
@@ -10,7 +11,7 @@ interface Props {
 // Tabla de naves guardadas.
 export function SavedStarshipsTable({ starships, onDelete, deletingId }: Props) {
   return (
-    <div className="animate-fade-in overflow-hidden rounded-lg border border-ink-700">
+    <div className="animate-fade-in overflow-hidden rounded-t-lg">
       {/* Tabla en desktop */}
       <table className="hidden w-full text-left text-sm md:table">
         <thead className="bg-ink-800 text-ink-300">
@@ -41,6 +42,14 @@ export function SavedStarshipsTable({ starships, onDelete, deletingId }: Props) 
             </tr>
           ))}
         </tbody>
+        {/* Pie de la tabla con la muesca */}
+        <tfoot>
+          <tr>
+            <td colSpan={4} className="p-0">
+              <NotchFooter />
+            </td>
+          </tr>
+        </tfoot>
       </table>
 
       {/* Tarjetas en móvil */}
@@ -63,6 +72,9 @@ export function SavedStarshipsTable({ starships, onDelete, deletingId }: Props) 
           </li>
         ))}
       </ul>
+
+      {/* Pie con la muesca para el listado móvil */}
+      <NotchFooter className="md:hidden" />
     </div>
   )
 }
