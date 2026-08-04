@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import type { Film } from '@/types/swapi'
 import { Button } from '@/components/atoms/Button'
+import { NotchFooter } from '@/components/atoms/NotchFooter'
 
 interface Props {
   films: Film[]
@@ -24,7 +25,7 @@ export function FilmsTable({ films }: Props) {
   }
 
   return (
-    <div className="animate-fade-in overflow-hidden rounded-lg border border-ink-700">
+    <div className="animate-fade-in overflow-hidden rounded-t-lg">
       {/* Tabla en desktop */}
       <table className="hidden w-full text-left text-sm md:table">
         <thead className="bg-ink-800 text-ink-300">
@@ -55,6 +56,14 @@ export function FilmsTable({ films }: Props) {
             </tr>
           ))}
         </tbody>
+        {/* Pie de la tabla con la muesca */}
+        <tfoot>
+          <tr>
+            <td colSpan={4} className="p-0">
+              <NotchFooter />
+            </td>
+          </tr>
+        </tfoot>
       </table>
 
       {/* Tarjetas en móvil */}
@@ -77,6 +86,9 @@ export function FilmsTable({ films }: Props) {
           </li>
         ))}
       </ul>
+
+      {/* Pie con la muesca para el listado móvil */}
+      <NotchFooter className="md:hidden" />
     </div>
   )
 }

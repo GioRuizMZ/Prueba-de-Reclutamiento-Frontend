@@ -21,7 +21,7 @@ export function Navbar({ onToggleSidebar, sidebarOpen }: Props) {
 
         {/* Centro: título del proyecto */}
         <div className="flex justify-center">
-          <span className="text-center text-lg font-semibold tracking-wide text-white sm:text-xl">
+          <span className="whitespace-nowrap text-center text-lg font-semibold tracking-wide text-white sm:text-xl">
             {PROJECT_NAME}
           </span>
         </div>
