@@ -9,7 +9,7 @@ export function NotchFooter({ className = '' }: Props) {
   return (
     <div
       aria-hidden="true"
-      className={`clip-notch-footer h-6 bg-ink-800 ${className}`}
+      className={`clip-notch-footer h-6 bg-ink-950 ${className}`}
     />
   )
 }
