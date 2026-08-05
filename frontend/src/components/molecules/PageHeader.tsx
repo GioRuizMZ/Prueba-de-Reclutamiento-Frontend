@@ -9,9 +9,10 @@ interface Props {
 export function PageHeader({ title, subtitle }: Props) {
   return (
     <div className="mb-6">
-      <h1 className="peer block text-2xl font-bold text-white sm:text-3xl">
+      <h1 className="peer inline-block w-fit text-2xl font-bold text-white sm:text-3xl">
         {title}
       </h1>
+      <br aria-hidden="true" />
       <span
         aria-hidden="true"
         className="mt-2 inline-block h-1 w-1 rounded-full bg-white/80 align-middle shadow-[0_0_8px_1px_rgba(255,255,255,0.5)]"
